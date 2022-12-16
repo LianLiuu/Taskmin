@@ -1,0 +1,81 @@
+* {
+    font-family: "Gill Sans";
+}
+
+article { 
+    margin: 0px 2em; 
+    padding-top: 2em;
+}
+
+p {
+    margin-bottom: 0rem !important;
+}
+
+h1 {
+    font-family: "Gill Sans";
+}
+
+nav > ul {
+    display: flex;
+    padding: 0px;
+    flex-direction: column;
+    justify-content: start;
+}
+
+nav > ul > li {
+    position: relative;
+    display: inline-block;
+    padding: 5px;
+}
+
+#firstButton {
+    width: 15em;
+}
+
+#secondButton {
+    width: 10em;
+}
+
+#addTaskDropDown {
+    padding: 2em;
+}
+
+#tagDropDown {
+    
+    padding: 1em;
+    
+}
+
+#addTagButton {
+    margin-top: 0.5em;
+}
+
+.template {
+    display: block;
+    opacity: 0.3;
+}
+
+.task {
+    padding: 0.5em;
+}
+
+.text {
+    padding: 0.25em;
+    font-size: 1.5em;
+}
+
+.done { opacity: 0.5; border-style: dotted; }
+
+ul {
+    list-style-type: none;
+}
+
+.btn {
+    margin:0.25em;
+}
+
+@media all and (min-width: 768px) {
+    nav > ul {
+	    flex-direction: row;
+    }
+}

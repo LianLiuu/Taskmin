@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name=author content="Scott D. Anderson">
+    <title>Taskmin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+    <link rel="stylesheet" href="style1.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.js"></script>
+</head>
+<body>
+
+<article>
+    <h1>Taskmin</h1>
+    <nav>
+        <ul>
+            <li>
+                <button type="button" class="btn-lg btn-warning dropdown-toggle" data-toggle="dropdown" id="firstButton">Add</button>
+                <div id="addTaskDropDown" class="dropdown-menu p-2">
+                    <form id="addTask" class="form-group"> 
+                        <h3>Add Task</h3>
+                    <label for="taskText">Task Name
+                        <input id="taskText" class="form-group" name="text" required>
+                    </label>
+                    <label>Priority:
+                            <select name="priority" class="form-select-sm">
+                                <option>low</option>
+                                <option selected>medium</option>
+                                <option>high</option>
+                            </select>
+                    </label>
+                    <label>Due Date:
+                            <input id="taskDueDate" name="duedate"
+                                   type="date" class="form-group">
+                    </label>
+                    <p>Select tag:</p>
+                    <div id="tags">
+                        <div class="form-check-inline">
+                            <input type="radio" name="tag" value="work" class="form-check-input">
+                            <label class="form-check-label">work</label>
+                        </div>
+                        <div class="form-check-inline">
+                            <input type="radio" name="tag" value="personal" class="form-check-input">
+                            <label class="form-check-label">personal</label>
+                        </div>
+                    </div>
+                    <button id="addTaskButton" type="button" class="btn btn-outline-secondary">add</button>
+                    <button id="cancelAddTask" type="button" class="btn btn-outline-secondary">cancel</button>
+                    </form>
+                </div>
+            </li>
+            <li>
+                <button type="button" class="btn-lg btn-warning dropdown-toggle" data-toggle="dropdown" id="secondButton">Sort</button>
+                <div class="dropdown-menu">
+                    <button class="dropdown-item" id="sortIdButton" type="button">by Id</button>
+                    <button class="dropdown-item" id="sortTagButton" type="button">by Tag</button>
+                    <button class="dropdown-item" id="sortDueDateButton" type="button">by Due Date</button>
+                    <button class="dropdown-item" id="sortPriorityButton" type="button">by Priority</button>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <button type="button" class="btn-lg btn-warning dropdown-toggle" data-toggle="dropdown">Local</button>
+                <div class="dropdown-menu">
+                    <button class="dropdown-item" id="saveLocalButton" type="button">Save</button>
+                    <button class="dropdown-item" id="loadLocalButton" type="button">Load</button>
+                    <button class="dropdown-item" id="resetLocalButton" type="button">Reset</button>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <button type="button" class="btn-lg btn-warning dropdown-toggle" data-toggle="dropdown">Cloud</button>
+                <div class="dropdown-menu">
+                    <button class="dropdown-item" id="loginCloudButton" type="button" data-toggle="modal"  data-target="#loginModal">Login</button>
+                    <button class="dropdown-item" id="saveCloudButton" type="button">Save</button>
+                    <button class="dropdown-item" id="loadCloudButton" type="button">Load</button>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <button type="button" class="btn-lg btn-warning dropdown-toggle" data-toggle="dropdown">Tags</button>
+                <div id="tagDropDown" class="dropdown-menu p-3">
+                    <h3>Manage Tags</h3>
+                    <div>
+                        <h5>Current Tags</h5>
+                        <ul id="currentTags">
+                            <li>
+                                <button type='button' class="btn btn-light delete">&#x2716;</button>
+                                <span class="tagName">work</span>
+                            </li>
+                            <li>
+                                <button type='button' class="btn btn-light delete">&#x2716;</button>
+                                <span class="tagName">personal</span>
+                            </li>
+                        </ul>
+                        <h5>Add Tags</h5>
+                        <form id="addTagForm" class="form-group">
+                            <label>Tag name
+                                <input class="form-label" name="tagName" required>
+                            </label>
+                            <label class="form-label">Tag color
+                                <input type="color" class="form-control-inline form-control-color" name ="typeColor" value="#563d7c">
+                            </label>
+                            <div>
+                                <button id="addTagButton" type="submit" class="btn btn-primary">add</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <ul id="theTasks">
+        
+        <!-- this is just an example; you'll remove it dynamically --> 
+        <!-- <li class="task" style="background-color: lightgreen" data-taskid="">
+          <span class="id">42</span>
+          <span class="due">Mon 5/15/2021</span>
+          <span class="priority">medium</span>
+          <span class="tag">personal</span>
+          <p class="text">send graduation cards to friends</p>
+          <button type="button" class="btn btn-light" class = "markDone">&#x2714;</button>
+          <button type="button" class="btn btn-light" class = "delete">&#x2716;</button>
+        </li> -->
+        <!-- end of example task -->
+      </ul>
+      
+    </article>
+
+      <ul class="template" id="task_elt_template">
+        <li class="task" style="background-color: tan" data-taskId="">
+            <span class="id">id</span>
+            <span class="due">date</span>
+            <span class="priority">priority</span>
+            <span class="tag">tag</span>
+            <p class="text">This is a template task, not even an example, unlike the one above</p>
+            <button type="button" class="markDone">&#x2714;</button>
+            <button type="button" class="delete">&#x2716;</button>
+        </li>
+    </ul>
+
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Login to cloud</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="form-group row">
+                      <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                      <div class="col-sm-10">
+                        <input type="email" class="form-control" id="email" name="email">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+                      <div class="col-sm-10">
+                        <input type="password" class="form-control" id="password" name="password">
+                      </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="addUserButton">Login</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<!-- JavaScript at the bottom -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="cloudapi.js"></script>
+<script src="examples.js"></script>
+<script src="Task.js"></script>
+<script src="TaskList.js"></script>
+<script src="dropdowns.js"></script>
+<script src="main.js"></script>
+<script src="dynamic-tags.js"></script>
+
+</article>
